@@ -1,0 +1,22 @@
+{
+  "name": "find-my-flight",
+  "version": "1.0.0",
+  "description": "A project using Graph Data-Structure",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kumar-laxmi/Find-My-Flight.git"
+  },
+  "author": "Kumar Laxmikant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kumar-laxmi/Find-My-Flight/issues"
+  },
+  "homepage": "https://github.com/Kumar-laxmi/Find-My-Flight#readme",
+  "dependencies": {
+    "bootstrap": "^5.1.3"
+  }
+}

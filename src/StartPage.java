@@ -27,7 +27,7 @@ public class StartPage {
 		
 		
 		start = new Point(109,389);
-		end = new Point(212,189);
+		end = new Point(459,318);
 		
 		startFrame = new JFrame();
 		heading = new JPanel();

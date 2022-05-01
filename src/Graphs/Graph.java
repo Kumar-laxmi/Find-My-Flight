@@ -15,11 +15,8 @@ public class Graph<T> {
  
     // This function adds the edge
     // between source to destination
-    public void addEdge(T source,
-                        T destination,
-                        boolean bidirectional)
+    public void addEdge(T source, T destination,boolean bidirectional)
     {
- 
         if (!map.containsKey(source))
             addVertex(source);
  
@@ -35,9 +32,7 @@ public class Graph<T> {
     // This function gives the count of vertices
     public void getVertexCount()
     {
-        System.out.println("The graph has "
-                           + map.keySet().size()
-                           + " vertex");
+        System.out.println("The graph has " + map.keySet().size() + " vertex");
     }
  
     // This function gives the count of edges
@@ -50,9 +45,7 @@ public class Graph<T> {
         if (bidirection == true) {
             count = count / 2;
         }
-        System.out.println("The graph has "
-                           + count
-                           + " edges.");
+        System.out.println("The graph has " + count + " edges.");
     }
  
     // This function gives whether
@@ -60,12 +53,10 @@ public class Graph<T> {
     public void hasVertex(T s)
     {
         if (map.containsKey(s)) {
-            System.out.println("The graph contains "
-                               + s + " as a vertex.");
+            System.out.println("The graph contains " + s + " as a vertex.");
         }
         else {
-            System.out.println("The graph does not contain "
-                               + s + " as a vertex.");
+            System.out.println("The graph does not contain " + s + " as a vertex.");
         }
     }
  
@@ -73,12 +64,10 @@ public class Graph<T> {
     public void hasEdge(T s, T d)
     {
         if (map.get(s).contains(d)) {
-            System.out.println("The graph has an edge between "
-                               + s + " and " + d + ".");
+            System.out.println("The graph has an edge between " + s + " and " + d + ".");
         }
         else {
-            System.out.println("The graph has no edge between "
-                               + s + " and " + d + ".");
+            System.out.println("The graph has no edge between " + s + " and " + d + ".");
         }
     }
  

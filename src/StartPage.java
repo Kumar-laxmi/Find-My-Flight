@@ -50,8 +50,7 @@ public class StartPage {
 				double framex = e.getX();
 				double framey = e.getY();
 				X.setText("X Coordinate is: "+framex);
-				Y.setText("Y Coordinate is: "+framey);
-				
+				Y.setText("Y Coordinate is: "+framey);		
 			}
 
 			@Override

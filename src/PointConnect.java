@@ -24,12 +24,22 @@ public class PointConnect extends Canvas{
 	
 	public void paint(Graphics g)
 	{
-		ImageIcon i = new ImageIcon("./src/Map.png"); 
+		ImageIcon i = new ImageIcon("src\\Map.png"); 
 		Image image = i.getImage();
 		g.drawImage(image, 0, 0, this);
 	    Graphics2D g2 = (Graphics2D) g;
 	    g2.setStroke(new BasicStroke(3));
 		g.drawLine(start.x, start.y, end.x, end.y);
+	}
+	
+
+	public void update(Graphics g)
+	{
+		
+	}
+	
+	public void page()
+	{
 	}
 
 }

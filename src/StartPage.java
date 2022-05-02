@@ -31,6 +31,7 @@ public class StartPage {
 		
 		
 		
+		
 		start = new Point(109,389);
 		end = new Point(459,318);
 		

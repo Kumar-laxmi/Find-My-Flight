@@ -22,34 +22,16 @@ public class StartPage {
 	
 	public void init()
 	{
+		// Instantiation of Frame Components
 		startFrame = new JFrame();
-		
-		input = new JPanel();
-		X = new JLabel("X Coordinate is: ");
-		Y = new JLabel("Y Coordinate is: ");
-		
-		
-		
-		
-		
-		start = new Point(109,389);
-		end = new Point(459,318);
-		
 		heading = new JPanel();
 		map = new JPanel();
-		{
-			tStart = new JToggleButton("Start");
-			tStart.setBounds(50, 500, 100, 50);
-			
-			
-		}
-		
-		
-		X.setVisible(true);
-		Y.setVisible(true);
-		X.setBounds(50,200,170,40);
-		Y.setBounds(50,300,170,40);
-		
+		input = new JPanel();
+		tStart = new JToggleButton("Start");
+		X = new JLabel("X Coordinate is: ");
+		Y = new JLabel("Y Coordinate is: ");
+		start = new Point(109,389);
+		end = new Point(459,318);
 		draw = new Canvas() {
 			private static final long serialVersionUID = 1L;
 
@@ -60,10 +42,23 @@ public class StartPage {
 				g.drawImage(image, 0, 0, this);
 			}
 		};
+		
+		// Component Properties
+		tStart.setBounds(50, 500, 100, 50);
+		
+		X.setVisible(true);
+		X.setBounds(50,200,170,40);
+		
+		Y.setVisible(true);
+		Y.setBounds(50,300,170,40);
+		
 		draw.setBounds(0,0,660,680);
 		draw.setVisible(true);
 		
+		heading.setBounds(0,0,1080,100);
+		heading.setBackground(Color.yellow);
 		
+		//Listeners and Actions
 		draw.addMouseListener(new MouseListener() {
 
 			@Override
@@ -76,51 +71,26 @@ public class StartPage {
 					X.setText("X Coordinate is: "+framex);
 					Y.setText("Y Coordinate is: "+framey);
 					
-					Graphics g = draw.getGraphics();
-					g.drawLine(framex, framey, framex, framey);
-					Graphics2D g2 = (Graphics2D) g;
-				    g2.setStroke(new BasicStroke(3));
-					g.drawLine(start.x, start.y, end.x, end.y);
-					
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-				
 			}
 
 			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mousePressed(MouseEvent e) {}
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseReleased(MouseEvent e) {}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseEntered(MouseEvent e) {}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseExited(MouseEvent e) {}
 			
 		});
 		
-		heading.setBounds(0,0,1080,100);
-		heading.setBackground(Color.yellow);
-		
-		
-		
+		//Panel Properties
 		map.setBounds(0,100,660,680);
 		map.add(draw);
 		
@@ -133,6 +103,7 @@ public class StartPage {
 		input.setLayout(null);
 		heading.setLayout(null);
 		
+		//Frame Properties
 		startFrame.setLayout(null);
 		startFrame.add(heading);
 		startFrame.add(map);

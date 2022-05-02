@@ -10,9 +10,10 @@ public class StartPage {
 	JPanel heading;
 	JPanel map;
 	JPanel input;
-	PointConnect connect;
 	Point start, end;
 	JLabel X, Y;
+	Canvas draw;
+	JToggleButton tStart, tEnd;
 	
 	public StartPage()
 	{
@@ -21,6 +22,8 @@ public class StartPage {
 	
 	public void init()
 	{
+		startFrame = new JFrame();
+		
 		input = new JPanel();
 		X = new JLabel("X Coordinate is: ");
 		Y = new JLabel("Y Coordinate is: ");
@@ -29,9 +32,14 @@ public class StartPage {
 		start = new Point(109,389);
 		end = new Point(459,318);
 		
-		startFrame = new JFrame();
 		heading = new JPanel();
 		map = new JPanel();
+		{
+			tStart = new JToggleButton("Start");
+			tEnd = new JToggleButton("End");
+			
+			tStart.setBounds(50, 500, 100, 50);
+		}
 		
 		
 		X.setVisible(true);
@@ -39,18 +47,40 @@ public class StartPage {
 		X.setBounds(50,200,170,40);
 		Y.setBounds(50,300,170,40);
 		
-		connect = new PointConnect(start,end);
-		connect.setBounds(0,0,660,680);
-		connect.setVisible(true);
-		connect.addMouseListener(new MouseListener() {
+		draw = new Canvas() {
+			private static final long serialVersionUID = 1L;
+
+			public void paint(Graphics g)
+			{
+				ImageIcon i = new ImageIcon("src\\Map.png"); 
+				Image image = i.getImage();
+				g.drawImage(image, 0, 0, this);
+			}
+		};
+		draw.setBounds(0,0,660,680);
+		draw.setVisible(true);
+		
+		
+		draw.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				double framex = e.getX();
-				double framey = e.getY();
-				X.setText("X Coordinate is: "+framex);
-				Y.setText("Y Coordinate is: "+framey);
+				try {
+					int framex = e.getX();
+					int framey = e.getY();
+					System.out.println("x: "+framex+", y: "+framey);
+					X.setText("X Coordinate is: "+framex);
+					Y.setText("Y Coordinate is: "+framey);
+					
+					Graphics g = draw.getGraphics();
+					g.drawLine(framex, framey, framex, framey);
+					
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				
 			}
 
@@ -85,12 +115,14 @@ public class StartPage {
 		
 		
 		
-		map.setBounds(420,100,660,680);
-		map.add(connect);
+		map.setBounds(0,100,660,680);
+		map.add(draw);
 		
-		input.setBounds(0,100,420,620);
+		input.setBounds(660,100,420,620);
 		input.add(X);
 		input.add(Y);
+		input.add(tStart);
+		input.add(tEnd);
 		
 		map.setLayout(null);
 		input.setLayout(null);
@@ -104,6 +136,8 @@ public class StartPage {
 		startFrame.setVisible(true);
 		startFrame.setSize(1080,780);
 	}
+	
+	
 	
 	
 

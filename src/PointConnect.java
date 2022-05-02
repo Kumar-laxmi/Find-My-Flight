@@ -31,5 +31,15 @@ public class PointConnect extends Canvas{
 	    g2.setStroke(new BasicStroke(3));
 		g.drawLine(start.x, start.y, end.x, end.y);
 	}
+	
+
+	public void update(Graphics g)
+	{
+		
+	}
+	
+	public void page()
+	{
+	}
 
 }

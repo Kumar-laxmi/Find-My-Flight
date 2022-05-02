@@ -13,7 +13,7 @@ public class StartPage {
 	Point start, end;
 	JLabel X, Y;
 	Canvas draw;
-	JToggleButton tStart, tEnd;
+	JToggleButton tStart;
 	
 	public StartPage()
 	{
@@ -29,6 +29,8 @@ public class StartPage {
 		Y = new JLabel("Y Coordinate is: ");
 		
 		
+		
+		
 		start = new Point(109,389);
 		end = new Point(459,318);
 		
@@ -36,9 +38,9 @@ public class StartPage {
 		map = new JPanel();
 		{
 			tStart = new JToggleButton("Start");
-			tEnd = new JToggleButton("End");
-			
 			tStart.setBounds(50, 500, 100, 50);
+			
+			
 		}
 		
 		
@@ -75,6 +77,9 @@ public class StartPage {
 					
 					Graphics g = draw.getGraphics();
 					g.drawLine(framex, framey, framex, framey);
+					Graphics2D g2 = (Graphics2D) g;
+				    g2.setStroke(new BasicStroke(3));
+					g.drawLine(start.x, start.y, end.x, end.y);
 					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -122,7 +127,6 @@ public class StartPage {
 		input.add(X);
 		input.add(Y);
 		input.add(tStart);
-		input.add(tEnd);
 		
 		map.setLayout(null);
 		input.setLayout(null);

@@ -70,7 +70,7 @@ public class StartPage {
 					System.out.println("x: "+framex+", y: "+framey);
 					X.setText("X Coordinate is: "+framex);
 					Y.setText("Y Coordinate is: "+framey);
-					
+					drawLine(draw,start,end);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -111,6 +111,31 @@ public class StartPage {
 		startFrame.setResizable(false);
 		startFrame.setVisible(true);
 		startFrame.setSize(1080,780);
+	}
+	
+	public void drawLine(Canvas c, Point start, Point mouseEntered) {
+		
+		Graphics g = c.getGraphics();
+		Graphics2D g2 = (Graphics2D) g;
+		final float dash1[] = {10.0f};
+	    final BasicStroke dashed = new BasicStroke(1.0f,
+	                        BasicStroke.CAP_BUTT,
+	                        BasicStroke.JOIN_MITER,
+	                        10.0f, dash1, 0.0f);
+	    g2.setStroke(dashed);
+	    g2.setBackground(Color.RED);
+		g2.drawLine(start.x, start.y, end.x, end.y);
+		
+	}
+	
+	public void resetCanvas(Canvas c)
+	{
+		Graphics g = c.getGraphics();
+		g.clearRect(0,0,660,680);
+		ImageIcon i = new ImageIcon("src\\Map.png"); 
+		Image image = i.getImage();
+		g.drawImage(image, 0, 0, c);
+		
 	}
 	
 	

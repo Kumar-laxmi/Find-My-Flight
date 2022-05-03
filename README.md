@@ -1,4 +1,4 @@
-<img src="./Image/Find-My-Flight.png" alt="Banner" />
+<img src="./Image/banner.png" alt="Banner" />
 A project using Graph Data-Structure
 
 ## Technology Used

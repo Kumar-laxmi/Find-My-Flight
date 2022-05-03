@@ -26,7 +26,7 @@ public class StartPage {
 	int[] xco = {0,211,109,211,238,458,277,107,130,398,182,288,540,156,182,162,413,460,336,206,392};
 	int[] yco = {0,190,390,524,427,318,530,301,466,249,586,222,227,405,223,63,355,223,259,143,297};
 	
-	JButton connect;
+	JButton connect, reset;
 	
 	public StartPage()
 	{
@@ -55,6 +55,7 @@ public class StartPage {
 		from = new JComboBox<Object>(fromData);
 		to = new JComboBox<Object>(toData);
 		connect = new JButton("FIND!");
+		reset = new JButton("Reset");
 		
 		// Component Properties
 		
@@ -77,8 +78,12 @@ public class StartPage {
 		to.setBounds(200,50,100,20);
 		to.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		
-		connect.setBounds(125, 100, 80, 30);
+		connect.setBounds(90, 100, 80, 30);
 		connect.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		
+		reset.setBounds(220, 100, 80, 30);
+		reset.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		
 		
 		//Listeners and Actions
 		draw.addMouseListener(new MouseListener() {
@@ -96,7 +101,21 @@ public class StartPage {
 					e1.printStackTrace();
 				}
 				
-				if()
+				for(int i = 0; i < 21; i++)
+				{
+					boolean checker = e.getX() <= xco[i]+3 && e.getX() >= xco[i]-3 && e.getY() <= yco[i]+3 && e.getY() >= yco[i]-3;
+					if(checker)
+					{
+						if(from.getSelectedIndex() == 0)
+						{
+							from.setSelectedIndex(i);
+						}
+						else if(to.getSelectedIndex() == 0)
+						{
+							to.setSelectedIndex(i);
+						}
+					}
+				}
 			}
 
 			@Override
@@ -141,8 +160,24 @@ public class StartPage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				boolean checkout = to.getSelectedIndex() == 0 || from.getSelectedIndex() == 0;
+				if(!checkout)
+				{
+					resetCanvas(draw);
+					drawLine(draw, new Point(xco[from.getSelectedIndex()],yco[from.getSelectedIndex()]), new Point(xco[to.getSelectedIndex()],yco[to.getSelectedIndex()]));
+				}
+			}
+			
+		});
+		
+		reset.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				to.setSelectedIndex(0);
+				from.setSelectedIndex(0);
 				resetCanvas(draw);
-				drawLine(draw, new Point(xco[from.getSelectedIndex()],yco[from.getSelectedIndex()]), new Point(xco[to.getSelectedIndex()],yco[to.getSelectedIndex()]));
 			}
 			
 		});
@@ -157,6 +192,7 @@ public class StartPage {
 		input.add(from);
 		input.add(to);
 		input.add(connect);
+		input.add(reset);
 		
 		map.setLayout(null);
 		input.setLayout(null);

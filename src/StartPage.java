@@ -23,8 +23,8 @@ public class StartPage {
 	String[] fromData = {"FROM","DEL","BOM","BLR","HYD","CCU","MAA","AMD","GOI","PAT","COK","LKO","GAU","PNQ","JAI","SXR","BBI","IXB","VNS",
 			"IXC","IXR"};
 	
-	String[] xco = {"0","211","109","211","238","458","277","107","130","398","182","288","540","156","182","162","413","460","336","206","392"};
-	String[] yco = {"0","190","390","524","427","318","530","301","466","249","586","222","227","405","223","63","355","223","259","143","297"};
+	int[] xco = {0,211,109,211,238,458,277,107,130,398,182,288,540,156,182,162,413,460,336,206,392};
+	int[] yco = {0,190,390,524,427,318,530,301,466,249,586,222,227,405,223,63,355,223,259,143,297};
 	
 	JButton connect;
 	
@@ -95,6 +95,8 @@ public class StartPage {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+				
+				if()
 			}
 
 			@Override
@@ -140,7 +142,7 @@ public class StartPage {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				resetCanvas(draw);
-				drawLine(draw, new Point(Integer.parseInt(xco[from.getSelectedIndex()]),Integer.parseInt(yco[from.getSelectedIndex()])), new Point(Integer.parseInt(xco[to.getSelectedIndex()]),Integer.parseInt(yco[to.getSelectedIndex()])));
+				drawLine(draw, new Point(xco[from.getSelectedIndex()],yco[from.getSelectedIndex()]), new Point(xco[to.getSelectedIndex()],yco[to.getSelectedIndex()]));
 			}
 			
 		});

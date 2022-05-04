@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.QuadCurve2D;
 import java.awt.geom.QuadCurve2D.Float;
 
@@ -106,14 +107,28 @@ public class StartPage {
 					boolean checker = e.getX() <= xco[i]+3 && e.getX() >= xco[i]-3 && e.getY() <= yco[i]+3 && e.getY() >= yco[i]-3;
 					if(checker)
 					{
+						
 						if(from.getSelectedIndex() == 0)
 						{
 							from.setSelectedIndex(i);
+							greenCircle(draw, new Point(e.getX(), e.getY()),13);
+							break;
 						}
 						else if(to.getSelectedIndex() == 0)
 						{
 							to.setSelectedIndex(i);
+							greenCircle(draw, new Point(e.getX(), e.getY()),13);
+							break;
 						}
+						else
+						{
+							greenCircle(draw, new Point(e.getX(), e.getY()),13);
+							break;
+						}
+					}
+					else
+					{
+						redCircle(draw, new Point(e.getX(), e.getY()),13);
 					}
 				}
 			}
@@ -122,13 +137,55 @@ public class StartPage {
 			public void mousePressed(MouseEvent e) {}
 
 			@Override
-			public void mouseReleased(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {
+				try {
+					int framex = e.getX();
+					int framey = e.getY();
+					System.out.println("x: "+framex+", y: "+framey);
+					X.setText("x: "+(int)framex);
+					Y.setText("y: "+(int)framey);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+				for(int i = 0; i < 21; i++)
+				{
+					boolean checker = e.getX() <= xco[i]+3 && e.getX() >= xco[i]-3 && e.getY() <= yco[i]+3 && e.getY() >= yco[i]-3;
+					if(checker)
+					{
+						
+						if(from.getSelectedIndex() == 0)
+						{
+							from.setSelectedIndex(i);
+							greenCircle(draw, new Point(e.getX(), e.getY()),13);
+							break;
+						}
+						else if(to.getSelectedIndex() == 0)
+						{
+							to.setSelectedIndex(i);
+							greenCircle(draw, new Point(e.getX(), e.getY()),13);
+							break;
+						}
+						else
+						{
+							greenCircle(draw, new Point(e.getX(), e.getY()),13);
+							break;
+						}
+					}
+					else
+					{
+						redCircle(draw, new Point(e.getX(), e.getY()),13);
+					}
+				}
+			}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {
+			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {
+			}
 			
 		});
 		
@@ -210,6 +267,11 @@ public class StartPage {
 	
 	public void drawLine(Canvas c, Point start, Point end) {
 		
+		
+		Point curve = new Point();
+		curve.x = (start.x + end.x)/2 + 20;
+		curve.y = (start.y + end.y)/2 + 20;
+		
 		Graphics g = c.getGraphics();
 		Graphics2D g2 = (Graphics2D) g;
 		final float dash1[] = {10.0f};
@@ -221,7 +283,7 @@ public class StartPage {
 		g2.drawLine(start.x, start.y, end.x, end.y);
 		
 		Float q = new QuadCurve2D.Float();
-		q.setCurve(start, new Point(330,340), end);
+		q.setCurve(start, curve, end);
 		g2.setColor(Color.red);
 		g2.setStroke(new BasicStroke(2));
 		g2.draw(q);
@@ -235,7 +297,32 @@ public class StartPage {
 		ImageIcon i = new ImageIcon("src\\Map.png"); 
 		Image image = i.getImage();
 		g.drawImage(image, 0, 0, c);
-		
+	}
+	
+	public void redCircle(Canvas c, Point center, int radius)
+	{
+		resetCanvas(c);
+		Graphics g = c.getGraphics();
+		g.setColor(Color.red);
+		Graphics2D g2 = (Graphics2D) g;
+		for(double i = 0; i < radius; i += 0.5)
+		{
+			Shape circle = new Ellipse2D.Double(center.x-(i/2), center.y-(i/2), i, i);
+			g2.draw(circle);
+		}
+	}
+	
+	public void greenCircle(Canvas c, Point center, int radius)
+	{
+		resetCanvas(c);
+		Graphics g = c.getGraphics();
+		g.setColor(Color.green);
+		Graphics2D g2 = (Graphics2D) g;
+		for(double i = 0; i < radius; i += 0.5)
+		{
+			Shape circle = new Ellipse2D.Double(center.x-(i/2), center.y-(i/2), i, i);
+			g2.draw(circle);
+		}
 	}
 
 }

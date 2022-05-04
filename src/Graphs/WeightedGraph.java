@@ -7,6 +7,12 @@ public class WeightedGraph {
 	 // Creating a Hash-Map
 	 static HashMap<Integer, String> map = new HashMap<>();
 	 
+	 // To initialize Graph
+	 static int vertices = 20;
+	 static Graph graph = new Graph(vertices);
+	 
+	 static LinkedList<Edge> [] adjacencylist;
+	 
 	 static class Edge {
 		 int source;
 		 int destination;
@@ -25,7 +31,6 @@ public class WeightedGraph {
 
 	 static class Graph {
 		 int vertices;
-		 LinkedList<Edge> [] adjacencylist;
 		
 		 Graph(int vertices) {
 			 this.vertices = vertices;
@@ -52,11 +57,77 @@ public class WeightedGraph {
 			 }
 		 }
 	 }
-	 public static void main(String[] args) {
+	 
+	 public class Dijkastra {
+		 int Min_Distance(int dist[], Boolean sptSet[]) {
+			 
+			 // We first initialize min values
+			 int min = Integer.MAX_VALUE, min_index = -1;
+			 
+			 for(int v=0; v<vertices; v++) {
+				 if(sptSet[v] == false && dist[v] <= min) {
+					 min = dist[v];
+					 min_index = v;
+				 }
+			 }
+			 
+			 return min_index;
+		 }
 		 
-		 // To initialize Graph
-		 int vertices = 20;
-		 Graph graph = new Graph(vertices);
+		 void Dijkstra(int source) {
+			 
+			 // Array to hold shortest distance from source to ith node
+			 int dist[] = new int[vertices];
+			 
+			 //sptSet[i] will be true when a node is included in shortest path tree 
+			 //or if shortest distance from source to ith index is finalized
+			 Boolean sptSet[] = new Boolean[vertices];
+			 
+			 // Initially we will initialize all distances as INFINITE
+			 // and sptSet[] array as false
+			 for(int i=0; i<vertices; i++) {
+				 dist[i] = Integer.MAX_VALUE;
+				 sptSet[i] = false;
+			 }
+			 
+			 // Setting distance from source to itself as ZERO
+			 dist[source] = 0;
+			 
+			 // Now finding shortest path for all vertices
+			 for(int i=0; i<vertices; i++) {
+				 // Now we pick up minimum distance vertex from the set of vertices
+				 int u = Min_Distance(dist, sptSet);
+				 
+				 // Now we mark the picked vertex as true as it is used
+				 sptSet[u] = true;
+				 
+				 LinkedList<Edge> list = adjacencylist[i];
+				 for (int j = 0; j <list.size() ; j++) {
+					// Update dist[v] only if is not in sptSet, there is an
+                	// edge from u to v, and total weight of path from src to
+	                // v through u is smaller than current value of dist[v]
+	                
+				 }
+				 
+			 }
+			 
+			 
+		 }
+		 
+		 void LeastDistance(int source, int destination) {
+			 
+		 }
+		 
+		 void LeastCost(int source, int destination) {
+			 
+		 }
+		 
+		 void LeastDuration(int source, int destination) {
+			 
+		 }
+	 }
+	 
+	 public static void main(String[] args) {
 		 
 		 map.put(1, "DEL");
 		 map.put(2, "BOM");

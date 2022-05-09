@@ -48,7 +48,7 @@ public class StartPage {
 
 			public void paint(Graphics g)
 			{
-				ImageIcon i = new ImageIcon("src\\Map.png"); 
+				ImageIcon i = new ImageIcon("./src/Map.png"); 
 				Image image = i.getImage();
 				g.drawImage(image, 0, 0, this);
 			}

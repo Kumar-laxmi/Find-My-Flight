@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-class DijkstrasAlgorithm {
+public class DijkstrasAlgorithm {
 
     static HashMap<Integer, String> map = new HashMap<>();
 
@@ -114,10 +114,10 @@ class DijkstrasAlgorithm {
         }
         printPath(parents[currentVertex], parents);
         System.out.print(map.get(currentVertex) + " ");
-        result.add(map.get(currentVertex));
+        resultPath.add(map.get(currentVertex));
     }
  
-        // Driver Code
+    // Driver Code
     public static void main(String[] args)
     {
         Scanner sc = new Scanner(System.in);
@@ -231,10 +231,11 @@ class DijkstrasAlgorithm {
         if(begin!=-1 && over!=-1) {
             dijkstra(cost, begin, over);
             
-            System.out.println("\nThe final sequence: " + result);
+            System.out.println("\nThe final sequence: " + resultPath);
         }
         else {
             System.out.println("Invlid Entry");
         }
+        sc.close();
     }
 }

@@ -1,3 +1,4 @@
+package UserInterface;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +7,8 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.QuadCurve2D;
 import java.awt.geom.QuadCurve2D.Float;
+import java.util.ArrayList;
+import Graphs.*;
 
 import javax.swing.*;
 
@@ -30,6 +33,7 @@ public class StartPage {
 	JLabel lblHeading;
 	JLabel backgroundImage;
 	JLabel logoMain;
+	DijkstrasAlgorithm dcost, ddistance, dtime;
 	
 	public StartPage()
 	{
@@ -220,8 +224,9 @@ public class StartPage {
 				if(!checkout)
 				{
 					resetCanvas(draw);
-					connectDots(draw, Result.random);
-//					drawLine(draw, new Point(xco[from.getSelectedIndex()],yco[from.getSelectedIndex()]), new Point(xco[to.getSelectedIndex()],yco[to.getSelectedIndex()]));
+					dcost = new DijkstrasAlgorithm();
+					dcost.dijkstra(dcost.co)
+					connectDots(draw, new ArrayList<String>(), Color.blue);
 					resultPanel(input, (from.getItemAt(from.getSelectedIndex())).toString(), (to.getItemAt(to.getSelectedIndex())).toString());
 				}
 			}
@@ -275,7 +280,7 @@ public class StartPage {
 		startFrame.setIconImage(new ImageIcon("Image\\Logo.png").getImage());
 	}
 	
-	public void drawLine(Canvas c, Point start, Point end) {
+	public void drawLine(Canvas c, Point start, Point end, Color color) {
 		
 		
 		Point curve = new Point();
@@ -294,7 +299,7 @@ public class StartPage {
 		
 		Float q = new QuadCurve2D.Float();
 		q.setCurve(start, curve, end);
-		g2.setColor(new Color(56, 149, 211));
+		g2.setColor(color);
 		g2.setStroke(new BasicStroke(3));
 		g2.draw(q);
 		
@@ -456,14 +461,14 @@ public class StartPage {
 		
 	}
 	
-	public void connectDots(Canvas c, String[] list)
+	public void connectDots(Canvas c, ArrayList<String> list, Color color)
 	{
-		for(int i = 0; i < list.length-1; i++)
+		for(int i = 0; i < list.size()-1; i++)
 		{
 			System.out.println("Inside Draw Line");
-			greenCircle(c, toPoint(list[i]),13);
-			greenCircle(c, toPoint(list[i+1]),13);
-			drawLine(c,toPoint(list[i]),toPoint(list[i+1]));
+			greenCircle(c, toPoint(list.get(i)),13);
+			greenCircle(c, toPoint(list.get(i+1)),13);
+			drawLine(c,toPoint(list.get(i)),toPoint(list.get(i+1)), color);
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {

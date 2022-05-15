@@ -32,7 +32,8 @@ public class WeightedGraph {
 	 static class Graph {
 		 int vertices;
 		
-		 Graph(int vertices) {
+		 @SuppressWarnings("unchecked")
+		Graph(int vertices) {
 			 this.vertices = vertices;
 			 adjacencylist = new LinkedList[vertices];
 			 //initialize adjacency lists for all the vertices

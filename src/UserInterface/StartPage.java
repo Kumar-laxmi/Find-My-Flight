@@ -22,10 +22,10 @@ public class StartPage {
 	Canvas draw;
 	JComboBox<?> from, to;
 	
-	String[] cities = Result.data;
+	String[] cities = Data.data;
 	
-	int[] xco = Result.xco;
-	int[] yco = Result.yco;
+	int[] xco = Data.xco;
+	int[] yco = Data.yco;
 	
 	JButton connect, reset;
 	JLabel lblTo, lblFrom;
@@ -33,7 +33,7 @@ public class StartPage {
 	JLabel lblHeading;
 	JLabel backgroundImage;
 	JLabel logoMain;
-	DijkstrasAlgorithm dcost, ddistance, dtime;
+	DijkstrasAlgorithm ddistance,dcost, dtime;
 	
 	public StartPage()
 	{
@@ -224,10 +224,29 @@ public class StartPage {
 				if(!checkout)
 				{
 					resetCanvas(draw);
+					
+					ddistance = new DijkstrasAlgorithm();
+					ddistance.dijkstra(Data.distance,from.getSelectedIndex()-1, to.getSelectedIndex()-1);
+					connectDots(draw, ddistance.resultPath, Color.blue, -20);
+					ddistance.totalCost();
+					ddistance.totalDistance();
+					ddistance.totalTime();
+					
 					dcost = new DijkstrasAlgorithm();
-					dcost.dijkstra(dcost.co)
-					connectDots(draw, new ArrayList<String>(), Color.blue);
-					resultPanel(input, (from.getItemAt(from.getSelectedIndex())).toString(), (to.getItemAt(to.getSelectedIndex())).toString());
+					dcost.dijkstra(Data.cost, from.getSelectedIndex()-1, to.getSelectedIndex()-1);
+					connectDots(draw, dcost.resultPath,Color.red, 20);
+					dcost.totalCost();
+					dcost.totalDistance();
+					dcost.totalTime();
+					
+					dtime = new DijkstrasAlgorithm();
+					dtime.dijkstra(Data.time,from.getSelectedIndex()-1, to.getSelectedIndex()-1);
+					connectDots(draw, dtime.resultPath,Color.yellow, 0);
+					dtime.totalCost();
+					dtime.totalDistance();
+					dtime.totalTime();
+					
+					resultPanel(input, ddistance, dcost,dtime);
 				}
 			}
 			
@@ -280,12 +299,12 @@ public class StartPage {
 		startFrame.setIconImage(new ImageIcon("Image\\Logo.png").getImage());
 	}
 	
-	public void drawLine(Canvas c, Point start, Point end, Color color) {
+	public void drawLine(Canvas c, Point start, Point end, Color color, int factor) {
 		
 		
 		Point curve = new Point();
-		curve.x = (start.x + end.x)/2 + 20;
-		curve.y = (start.y + end.y)/2 + 20;
+		curve.x = (start.x + end.x)/2 + factor;
+		curve.y = (start.y + end.y)/2 + factor;
 		
 		Graphics g = c.getGraphics();
 		Graphics2D g2 = (Graphics2D) g;
@@ -352,7 +371,7 @@ public class StartPage {
 		}
 	}
 	
-	public void resultPanel(JPanel panel, String From, String To) {
+	public void resultPanel(JPanel panel,DijkstrasAlgorithm distance, DijkstrasAlgorithm cost,DijkstrasAlgorithm time) {
 		
 		// Initialzation
 		panel.setVisible(false);
@@ -360,32 +379,29 @@ public class StartPage {
 		result.setBounds(panel.getBounds());
 		result.setVisible(true);
 		
-		From = From.split(" ", 2)[0];
-		To = To.split(" ", 2)[0];
-		
 		
 		// Initializations and Declarations
 		JLabel logoMain = new JLabel(new ImageIcon("Image\\LogoMain.png"));
 		JButton back = new JButton("BACK");
 		JLabel background = new JLabel(new ImageIcon("Image\\ResultPanelBg.png"));
 		JPanel pDistance = new JPanel(new FlowLayout());
-		JPanel pTime = new JPanel(new FlowLayout());
 		JPanel pCost = new JPanel(new FlowLayout());
+		JPanel pTime = new JPanel(new FlowLayout());
 		JTabbedPane tab = new JTabbedPane();
 		
 		JLabel effDistance = new JLabel();
 		JLabel effCost = new JLabel();
 		JLabel effTime = new JLabel();
 		
-		effDistance.setText("<html><b><center><h3>"+From+" -> "+To+"</h3></center><h3></b><font color = \"green\">Distance: "+
-				Result.shortestDistance()[0]+"</font><br>Cost: "+Result.shortestDistance()[1]+"<br>Time: "+
-				Result.shortestDistance()[2]+"</h3><center><h3>-----ROUTE-----</h3><font color = \"red\">SXR -> DEL -> JAI</center></html>");
-		effCost.setText("<html><b><center><h3>"+From+" -> "+To+"</h3></center><h3></b>Distance: "+
-				Result.shortestDistance()[0]+"<br><font color = \"green\">Cost: "+Result.shortestDistance()[1]+"<br></font>Time: "+
-				Result.shortestDistance()[2]+"</h3><center><h3>-----ROUTE-----</h3><font color = \"red\">SXR -> DEL -> JAI</center></html>");
-		effTime.setText("<html><b><center><h3>"+From+" -> "+To+"</h3></center><h3></b>Distance: "+
-				Result.shortestDistance()[0]+"<br>Cost: "+Result.shortestDistance()[1]+"<br><font color = \"green\">Time: "+
-				Result.shortestDistance()[2]+"</font></h3><center><h3>-----ROUTE-----</h3><font color = \"red\">SXR -> DEL -> JAI</center></html>");
+		effDistance.setText("<html><b><center><h3>"+distance.resultPath.get(0)+" -> "+distance.resultPath.get(distance.resultPath.size()-1)+"</h3></center><h3></b><font color = \"green\">Distance: "+
+				distance.totalDistance+" Kms</font><br>Cost: Rs "+distance.totalCost+"<br>Time: "+
+				distance.totalTime+" minutes</h3><center><h3>-----ROUTE-----</h3><font color = \"red\">"+routePrint(distance.resultPath)+"</center></html>");
+		effCost.setText("<html><b><center><h3>"+cost.resultPath.get(0)+" -> "+cost.resultPath.get(cost.resultPath.size()-1)+"</h3></center><h3></b>Distance: "+
+				cost.totalDistance+" Kms<br><font color = \"green\">Cost: Rs "+cost.totalCost+"<br></font>Time: "+
+				cost.totalTime+" minutes</h3><center><h3>-----ROUTE-----</h3><font color = \"red\">"+routePrint(cost.resultPath)+"</center></html>");
+		effTime.setText("<html><b><center><h3>"+time.resultPath.get(0)+" -> "+time.resultPath.get(time.resultPath.size()-1)+"</h3></center><h3></b>Distance: "+
+				time.totalDistance+" Kms<br>Cost: Rs "+time.totalCost+"<br><font color = \"green\">Time: "+
+				time.totalTime+" minutes</font></h3><center><h3>-----ROUTE-----</h3><font color = \"red\">"+routePrint(time.resultPath)+"</center></html>");
 		
 		
 		// Component Properties
@@ -399,6 +415,7 @@ public class StartPage {
 		
 		tab.setBounds(70,330,280,220);
 		tab.setVisible(true);
+		
 		
 		
 		
@@ -435,14 +452,11 @@ public class StartPage {
 	{
 		int i = 1;
 		String temp = "Inside to Point";
-		System.out.println(temp);
 		boolean check = false;
 		for(i = 1; i < 21; i++)
 		{
 			temp = cities[i].split(" ", 2)[1];
-			System.out.println(temp);
 			temp = temp.substring(1, temp.length()-1);
-			System.out.println(temp);
 			if(temp.equals(s))
 			{
 				check = true;
@@ -451,8 +465,6 @@ public class StartPage {
 		}
 		if(check)
 		{
-			System.out.println(temp);
-			System.out.println(xco[i]+", "+yco[i]);
 			return new Point(xco[i],yco[i]);
 		}
 		else {
@@ -461,14 +473,13 @@ public class StartPage {
 		
 	}
 	
-	public void connectDots(Canvas c, ArrayList<String> list, Color color)
+	public void connectDots(Canvas c, ArrayList<String> list, Color color, int factor)
 	{
 		for(int i = 0; i < list.size()-1; i++)
 		{
-			System.out.println("Inside Draw Line");
-			greenCircle(c, toPoint(list.get(i)),13);
-			greenCircle(c, toPoint(list.get(i+1)),13);
-			drawLine(c,toPoint(list.get(i)),toPoint(list.get(i+1)), color);
+			greenCircle(c, toPoint(list.get(i)),10);
+			greenCircle(c, toPoint(list.get(i+1)),10);
+			drawLine(c,toPoint(list.get(i)),toPoint(list.get(i+1)), color, factor);
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -477,6 +488,18 @@ public class StartPage {
 			}
 			
 		}
+	}
+	
+	public String routePrint(ArrayList<String> list)
+	{
+		String result = "";
+		int n = list.size();
+		for(int i = 0; i < n-1;i++)
+		{
+			result = result + list.get(i) +"-->";
+		}
+		result = result + list.get(n-1);
+		return result;
 	}
 
 }
